@@ -1,6 +1,6 @@
 const superagent = require("superagent");
 const baseUrl = "https://gorest.co.in/public/v2/";
-const TOKEN = "b36e0b69874f07f5f7ad29821143ab12e26bad9db53e853545f68f9925279e75";
+const TOKEN = require("./resources/token");
 const userData = require("./resources/testdata");
 
 const createUser = async (userData) => {
