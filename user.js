@@ -1,6 +1,6 @@
 const superagent = require("superagent");
-const baseUrl = "https://gorest.co.in/public/v2/";
-const TOKEN = require("./resources/token");
+const usersUrl = "https://gorest.co.in/public/v2/users/";
+const TOKEN = require("./token");
 
 const userData = {
     email: `test${Math.floor(Math.random() * 1000 + 1)}@testemail.com`,
@@ -14,18 +14,17 @@ const newData = {
     status: "active"
 };
 
-
 let userId = null;
 
 export const createUser = async (userData) => {
-
     try {
         const res = await superagent
-            .post(`${baseUrl}users`)
+            .post(usersUrl)
             .set("Authorization", `Bearer ${TOKEN}`)
             .send(userData);
-        userId = res.body.id;
-        return res.body;
+        //userId = res.body.id;
+        //console.log(userId);
+        return res;
     } catch (err) {
         console.log(err);
     }
@@ -34,9 +33,9 @@ export const createUser = async (userData) => {
 export const getUserById = async (userId) => {
     try {
         const res = await superagent
-            .get(`${baseUrl}users/${userId}`)
+            .get(`${usersUrl}${userId}`)
             .set("Authorization", `Bearer ${TOKEN}`);
-        console.log(res.body);
+        //console.log(res.body);
         return res;
 
     } catch (err) {
@@ -47,10 +46,10 @@ export const getUserById = async (userId) => {
 export const updateUser = async(userId, newData) => {
     try {
         const res = await superagent
-            .put(`${baseUrl}users/${userId}`)
+            .put(`${usersUrl}${userId}`)
             .set("Authorization", `Bearer ${TOKEN}`)
             .send(newData);
-        console.log(res.body);
+        //console.log(res.body);
         return res;
     } catch (err) {
         console.log(err);
@@ -61,10 +60,10 @@ export const updateUser = async(userId, newData) => {
 export const deleteUser = async (userId) => {
     try {
         const res = await superagent
-            .delete(`${baseUrl}users/${userId}`)
+            .delete(`${usersUrl}${userId}`)
             .set("content-type", "application/json")
             .set("Authorization", `Bearer ${TOKEN}`)
-        console.log(res.body);
+        //console.log(res.body);
         return res;    
     } catch (err) {
         console.log(err);
@@ -81,5 +80,3 @@ export const deleteUser = async (userId) => {
         console.log(err);
     }
 });
-
-//module.exports = createUser, getUserById, updateUser, deleteUser;
