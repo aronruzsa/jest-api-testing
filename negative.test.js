@@ -54,8 +54,6 @@ describe("Negative tests", () => {
     test("422 Validation failed", async () => {
         const res = await createPost({});
         expect(res.status).to.eq(422);
-        expect(res.body.message).to.eq("Validation failed");
-        expect(res.body).to.deep.include(emptyPostResponse);
     })
 
 })

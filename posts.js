@@ -1,14 +1,13 @@
-const superagent = require("superagent");
-const postsUrl = "https://gorest.co.in/public/v2/posts/";
+const supertest = require("supertest");
+const request = supertest("https://gorest.co.in/public/v2/");
 const TOKEN = require("./token");
 
 export const createPost = async (postData) => {
     try {
-        const res = await superagent
-            .post(postsUrl)
+        const res = await request
+            .post("posts")
             .set("Authorization", `Bearer ${TOKEN}`)
             .send(postData);
-        //console.log(res.body);
         return res;
     } catch (err) {
         console.log(err);
@@ -17,10 +16,9 @@ export const createPost = async (postData) => {
 
 export const getPostById = async (postId) => {
     try {
-        const res = await superagent
-            .get(`${postsUrl}${postId}`)
+        const res = await request
+            .get(`posts/${postId}`)
             .set("Authorization", `Bearer ${TOKEN}`);
-        //console.log(res.body);
         return res;
     } catch (err) {
         console.log(err);
@@ -29,11 +27,10 @@ export const getPostById = async (postId) => {
 
 export const updatePost = async (postId, newData) => {
     try {
-        const res = await superagent
-            .put(`${postsUrl}${postId}`)
+        const res = await request
+            .put(`posts/${postId}`)
             .set("Authorization", `Bearer ${TOKEN}`)
             .send(newData);
-        //console.log(res.body);
         return res;
     } catch (err) {
         console.log(err);
@@ -42,10 +39,9 @@ export const updatePost = async (postId, newData) => {
 
 export const deletePost = async (postId) => {
     try {
-        const res = await superagent
-            .delete(`${postsUrl}${postId}`)
+        const res = await request
+            .delete(`posts/${postId}`)
             .set("Authorization", `Bearer ${TOKEN}`)
-        //console.log(res.body);
         return res;
     } catch (err) {
         console.log(err);

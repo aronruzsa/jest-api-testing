@@ -1,5 +1,5 @@
-const superagent = require("superagent");
-const usersUrl = "https://gorest.co.in/public/v2/users/";
+const supertest = require("supertest");
+const request = supertest("https://gorest.co.in/public/v2/");
 const TOKEN = require("./token");
 
 const userData = {
@@ -18,12 +18,11 @@ let userId = null;
 
 export const createUser = async (userData) => {
     try {
-        const res = await superagent
-            .post(usersUrl)
+        const res = await request
+            .post("users")
             .set("Authorization", `Bearer ${TOKEN}`)
             .send(userData);
-        //userId = res.body.id;
-        //console.log(userId);
+        userId = res.body.id;
         return res;
     } catch (err) {
         console.log(err);
@@ -32,12 +31,10 @@ export const createUser = async (userData) => {
 
 export const getUserById = async (userId) => {
     try {
-        const res = await superagent
-            .get(`${usersUrl}${userId}`)
+        const res = await request
+            .get(`users/${userId}`)
             .set("Authorization", `Bearer ${TOKEN}`);
-        //console.log(res.body);
         return res;
-
     } catch (err) {
         console.log(err);
     }
@@ -45,11 +42,10 @@ export const getUserById = async (userId) => {
 
 export const updateUser = async(userId, newData) => {
     try {
-        const res = await superagent
-            .put(`${usersUrl}${userId}`)
+        const res = await request
+            .put(`users/${userId}`)
             .set("Authorization", `Bearer ${TOKEN}`)
             .send(newData);
-        //console.log(res.body);
         return res;
     } catch (err) {
         console.log(err);
@@ -59,11 +55,10 @@ export const updateUser = async(userId, newData) => {
 
 export const deleteUser = async (userId) => {
     try {
-        const res = await superagent
-            .delete(`${usersUrl}${userId}`)
+        const res = await request
+            .delete(`users/${userId}`)
             .set("content-type", "application/json")
             .set("Authorization", `Bearer ${TOKEN}`)
-        //console.log(res.body);
         return res;    
     } catch (err) {
         console.log(err);

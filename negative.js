@@ -1,19 +1,25 @@
-const superagent = require("superagent");
-const postsUrl = "https://gorest.co.in/public/v2/posts";
+const supertest = require("supertest");
+const request = supertest("https://gorest.co.in/public/v2/");
 
 export const postWithoutAuth = async (postData) => {
-        const res = await superagent
-            .post(postsUrl)
+    try {
+        const res = await request
+            .post("posts")
             .send(postData);
-        console.log(res.body);
         return res;
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 export const postWithBadAuth = async (postData) => {
-        const res = await superagent
-            .post(postsUrl)
+    try {
+        const res = await request
+            .post("posts")
             .set("Authorization", "Bearer 123456789")
             .send(postData);
-        console.log(res.body);
         return res;
+    } catch (err) {
+        console.log(err);
+    }
 }
